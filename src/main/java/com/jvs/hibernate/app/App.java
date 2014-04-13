@@ -19,6 +19,7 @@ public class App {
 		
 		PersonService personService = (PersonService)context.getBean("personService");
 		
+		//Creates a Person object to persist it. 
 		Person person = new Person("Jorge", "Vazquez");
 		personService.savePerson(person);
 		logger.info("person created...");
