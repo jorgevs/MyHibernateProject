@@ -29,7 +29,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>				
 				<!--prop key="hibernate.hbm2ddl.auto">create</prop-->
 			</props>
 		</property>
@@ -47,7 +47,7 @@
 	<!-- Beanto translate Hibernate exceptions to Spring exceptions -->
 	<bean id="exceptionTranslator" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	
-	<bean id="personDao" class="com.jvs.hibernate.dao.PersonDaoImpl" />
-	<bean id="personService" class="com.jvs.hibernate.service.PersonServiceImpl" />
+	<!--bean id="personDao" class="com.jvs.hibernate.dao.PersonDaoImpl" />
+	<bean id="personService" class="com.jvs.hibernate.service.PersonServiceImpl" /-->
 
 </beans>

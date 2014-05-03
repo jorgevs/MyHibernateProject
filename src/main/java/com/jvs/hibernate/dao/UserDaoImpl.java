@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jvs.hibernate.entity.User;
 
-@Repository
+@Repository("userDao")
 public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 	
 	@Override

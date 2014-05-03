@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jvs.hibernate.dao.UserDao;
 import com.jvs.hibernate.entity.User;
 
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
 	@Autowired

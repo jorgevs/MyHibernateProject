@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jvs.hibernate.dao.PersonDao;
 import com.jvs.hibernate.entity.Person;
 
-@Service
+@Service("personService")
 public class PersonServiceImpl implements PersonService {
 
 	@Autowired
@@ -18,13 +18,13 @@ public class PersonServiceImpl implements PersonService {
 
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Person findByPersonName(String firstName, String lastName) {		
 		return personDao.findByName(firstName, lastName);
 	}	
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Person> loadAllPersons() {
 		return personDao.findAll(Person.class);
 	}
@@ -36,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
 	}	
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Person findPersonById(Long id) {
 		return personDao.findByID(Person.class, id);
 	}	

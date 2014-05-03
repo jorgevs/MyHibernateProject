@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jvs.hibernate.entity.Person;
 
-@Repository
+@Repository("personDao")
 public class PersonDaoImpl extends BaseDaoImpl<Person> implements PersonDao {
 	
 	public Person findByName(String firstName, String lastName) {        

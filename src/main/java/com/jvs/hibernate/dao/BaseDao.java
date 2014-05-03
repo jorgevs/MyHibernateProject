@@ -9,6 +9,8 @@ public interface BaseDao<T> {
 	public void save(T entity);
 
 	public void merge(T entity);
+	
+	public void update(T entity);
 
 	public void delete(T entity);
 

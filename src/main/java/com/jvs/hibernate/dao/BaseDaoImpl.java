@@ -30,6 +30,11 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	public void merge(T entity) {
 		session().merge(entity);
 	}
+	
+	@Override
+	public void update(T entity) {
+		session().update(entity);
+	}	
 
 	@Override
 	public void delete(T entity) {

@@ -12,8 +12,8 @@ import javax.persistence.Table;
 public class Person extends BaseEntityImpl {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID")
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="PERSON_ID")
 	private long PersonId;
 	
 	@Column(name="FIRST_NAME")
