@@ -1,6 +1,6 @@
 package com.jvs.hibernate.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,7 +39,7 @@ public class Customer extends AuditBaseEntityImpl {
 
 	
 	@OneToMany(mappedBy="customer")
-	private Set<Order> orders;
+	private List<Order> orders;
 	
 	public Customer(){
 		super();
@@ -107,6 +107,14 @@ public class Customer extends AuditBaseEntityImpl {
 		this.city = city;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
