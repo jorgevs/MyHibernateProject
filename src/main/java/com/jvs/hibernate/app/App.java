@@ -1,46 +1,44 @@
 package com.jvs.hibernate.app;
 
-import java.util.List;
+import java.util.Date;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.jvs.hibernate.entity.Person;
-import com.jvs.hibernate.entity.User;
-import com.jvs.hibernate.service.PersonService;
-import com.jvs.hibernate.service.UserService;
+import com.jvs.hibernate.entity.Customer;
+import com.jvs.hibernate.entity.Order;
+import com.jvs.hibernate.util.AuditInterceptor;
+import com.jvs.hibernate.util.HibernateUtil;
 
 public class App {
 	private static final Logger logger = LoggerFactory.getLogger(App.class);
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
+		AuditInterceptor interceptor = new AuditInterceptor();	
+		interceptor.setUserIdForCurrentThread(999999L);
 		
-		ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-		
-		PersonService personService = (PersonService)context.getBean("personService");
-		UserService userService = (UserService)context.getBean("userService");
-		
-		//Creates a Person object to persist it. 
-		Person person = new Person("Jorge", "Vazquez");
-		personService.savePerson(person);
-		logger.info("person created...");
-		
-		List<Person> listPersons = personService.loadAllPersons();
-		for (Person p : listPersons) {
-			logger.info("Person: " + p.toString());
-		}
-		
-		
-		//Creates a Person object to persist it. 
-		User user = new User("Jorge", "Eduardo", "Vazquez");
-		userService.saveUser(user);
-		logger.info("user created...");
-						
-		
-		
-		((ClassPathXmlApplicationContext)context).close();
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession(interceptor);
+		session.beginTransaction();
+
+		Customer customer = new Customer();
+		customer.setName("Jorge Vazquez");
+		session.save(customer);
+
+		Order order1 = new Order(new Date(), "CREDIT", "PAID");
+		Order order2 = new Order(new Date(), "CASH", "NOT_PAID");
+
+		order1.setCustomer(customer);
+		order2.setCustomer(customer);
+
+		session.save(order1);
+		session.save(order2);
+
+		session.getTransaction().commit();
+		session.close();
+
 	}
-	
+
 }
