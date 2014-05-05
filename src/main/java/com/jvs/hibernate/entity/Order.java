@@ -3,6 +3,7 @@ package com.jvs.hibernate.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Order extends AuditBaseEntityImpl {
 	
 	
 	@ManyToOne
-	@JoinColumn(name="CUSTOMER_ID")
+	@JoinColumn(name="CUSTOMER_ID", insertable=false, updatable=false)
 	private Customer customer;
 
 	

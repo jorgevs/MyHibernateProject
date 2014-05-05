@@ -25,26 +25,17 @@ public class App {
 		session.beginTransaction();
 		//----------------------------------------------------
 		
-		
 		Customer customer = new Customer();
-		customer.setName("Jorge Vazquez");
+		customer.setName("Jorge Vazquez");				
+	
+		ArrayList<Order> orderList = new ArrayList<Order>();		
+		orderList.add(new Order(new Date(), "CREDIT", "PAID"));
+		orderList.add(new Order(new Date(), "CASH", "NOT_PAID"));
+		
+		customer.setOrders(orderList);		
+	
 		session.save(customer);
 		
-		
-		Order order1 = new Order(new Date(), "CREDIT", "PAID");
-		Order order2 = new Order(new Date(), "CASH", "NOT_PAID");
-
-		ArrayList<Order> orderList = new ArrayList<Order>();
-		orderList.add(order1);
-		orderList.add(order2);
-		
-		order1.setCustomer(customer);
-		order2.setCustomer(customer);
-
-		session.save(order1);
-		session.save(order2);
-
-		//customer.setOrders(orderList);
 		
 		//----------------------------------------------------		
 		session.getTransaction().commit();
