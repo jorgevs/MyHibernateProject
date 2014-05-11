@@ -14,37 +14,36 @@ public class PersonServiceImpl implements PersonService {
 
 	@Autowired
 	private PersonDao personDao;
-	
-
 
 	@Override
 	@Transactional(readOnly = true)
-	public Person findByPersonName(String firstName, String lastName) {		
+	public Person findPersonByName(String firstName, String lastName) {
 		return personDao.findByName(firstName, lastName);
-	}	
-	
+	}
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<Person> loadAllPersons() {
-		return personDao.findAll(Person.class);
+		return personDao.findAll();
 	}
-	
+
 	@Override
 	@Transactional
 	public void savePerson(Person person) {
 		personDao.save(person);
-	}	
-	
+
+	}
+
 	@Override
 	@Transactional(readOnly = true)
 	public Person findPersonById(Long id) {
-		return personDao.findByID(Person.class, id);
-	}	
-	
+		return personDao.findById(id);
+	}
+
 	@Override
 	@Transactional
 	public void deletePerson(Person person) {
-		personDao.delete(person);
+		personDao.delete(person.getPersonId());
 	}
 
 }

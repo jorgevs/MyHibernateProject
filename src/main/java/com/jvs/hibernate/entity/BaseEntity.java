@@ -1,5 +1,7 @@
 package com.jvs.hibernate.entity;
 
-public interface BaseEntity {
+import java.io.Serializable;
+
+public interface BaseEntity extends Serializable  {
 
 }

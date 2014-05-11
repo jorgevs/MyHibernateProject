@@ -1,14 +1,30 @@
 package com.jvs.hibernate.dao;
 
+import java.io.Serializable;
 import java.util.List;
+
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class BaseDaoImpl<T> implements BaseDao<T> {
+import com.jvs.hibernate.entity.BaseEntityImpl;
 
+public abstract class BaseDaoImpl<T extends BaseEntityImpl, I extends Serializable> implements BaseDao<T, I> {
+
+	private static final Logger logger = LoggerFactory.getLogger(BaseDaoImpl.class);
+	
+	protected Class<T> entityClass;
+
+	public BaseDaoImpl(Class<T> entityClass) {
+		this.entityClass = entityClass;
+	}
+	
+	
 	@Autowired
 	private SessionFactory sessionFactory; 
 		
@@ -21,26 +37,16 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		}
 	}
 	
-	@Override
-	public void save(T entity) {
-		session().saveOrUpdate(entity);
-	}
-
-	@Override
-	public void merge(T entity) {
-		session().merge(entity);
-	}
+	
 	
 	@Override
-	public void update(T entity) {
-		session().update(entity);
-	}	
-
-	@Override
-	public void delete(T entity) {
-		session().delete(entity);
+	@SuppressWarnings(value = { "unchecked" })
+	public List<T> findAll() {
+		logger.info("entityClass: " + this.entityClass);
+		Query query = session().createQuery("FROM " + this.entityClass.getName());
+        return query.list();       
 	}
-
+	
 	@Override
 	@SuppressWarnings(value = { "unchecked" })
 	public List<T> findMany(Query query) {
@@ -51,19 +57,36 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	@SuppressWarnings(value = { "unchecked" })
 	public T findOne(Query query) {		
 		return (T)query.uniqueResult();
+	}	
+	
+	@Override
+	@SuppressWarnings(value = { "unchecked" })
+	public T findById(I id) {
+        return (T)session().get(this.entityClass, id);
+	}
+	
+	@Override
+	public void save(T entity) {
+		session().saveOrUpdate(entity);
 	}
 
 	@Override
 	@SuppressWarnings(value = { "unchecked" })
-	public List<T> findAll(Class<T> clazz) {
-		Query query = session().createQuery("FROM " + clazz.getName());
-        return query.list();       
+	public T update(T entity) {
+		return (T)session().merge(entity);
 	}
 
 	@Override
-	@SuppressWarnings(value = { "unchecked" })
-	public T findByID(Class<T> clazz, Long id) {		
-        return (T) session().get(clazz, id);
+	public void delete(I id) {
+		if (id == null) {
+			return;
+		}
+
+		T entity = this.findById(id);
+		if (entity == null) {
+			return;
+		}
+		session().delete(entity);
 	}
 
 }

@@ -44,10 +44,7 @@
 
 	<tx:annotation-driven />
 	
-	<!-- Beanto translate Hibernate exceptions to Spring exceptions -->
+	<!-- Bean to translate Hibernate exceptions to Spring exceptions -->
 	<bean id="exceptionTranslator" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-	
-	<!--bean id="personDao" class="com.jvs.hibernate.dao.PersonDaoImpl" />
-	<bean id="personService" class="com.jvs.hibernate.service.PersonServiceImpl" /-->
 
 </beans>

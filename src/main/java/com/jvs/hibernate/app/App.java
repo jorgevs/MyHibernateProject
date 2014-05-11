@@ -25,6 +25,7 @@ public class App {
 		session.beginTransaction();
 		//----------------------------------------------------
 		
+		
 		Customer customer = new Customer();
 		customer.setName("Jorge Vazquez");				
 	

@@ -16,15 +16,15 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public User findByUserName(String userName) {		
 		return userDao.findByName(userName);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<User> loadAllUsers() {
-		return userDao.findAll(User.class);
+		return userDao.findAll();
 	}
 
 	@Override
@@ -34,15 +34,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public User findUserById(Long id) {
-		return userDao.findByID(User.class, id);
+		return userDao.findById(id);
 	}
 
 	@Override
 	@Transactional
 	public void deleteUser(User user) {
-		userDao.delete(user);
+		userDao.delete(user.getUserId());
 	}
 
 }

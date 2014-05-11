@@ -1,25 +1,26 @@
 package com.jvs.hibernate.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Query;
 
-public interface BaseDao<T> {
+import com.jvs.hibernate.entity.BaseEntityImpl;
 
-	public void save(T entity);
+public interface BaseDao<T extends BaseEntityImpl, I extends Serializable> {
 
-	public void merge(T entity);
+	public List<T> findAll();
 	
-	public void update(T entity);
-
-	public void delete(T entity);
-
 	public List<T> findMany(Query query);
-
+	
 	public T findOne(Query query);
+	
+	public T findById(I id);	
+		
+	public void save(T entity);
+	
+	public T update(T entity);
 
-	public List<T> findAll(Class<T> clazz);
-
-	public T findByID(Class<T> clazz, Long id);
+	public void delete(I id);
 
 }
