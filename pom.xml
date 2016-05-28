@@ -8,10 +8,10 @@
 	<properties>
 		<spring-framework.version>3.2.3.RELEASE</spring-framework.version>
 		<hibernate.version>3.6.10.Final</hibernate.version>
-		<junit.version>4.11</junit.version>		
+		<junit.version>4.11</junit.version>
 		<mysql.version>5.1.10</mysql.version>
 		<postgresql.version>9.1-901.jdbc4</postgresql.version>
-		<commons-dbcp.version>1.4</commons-dbcp.version>		
+		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<org.slf4j-version>1.7.6</org.slf4j-version>
 		<log4j.version>1.2.15</log4j.version>
 	</properties>
@@ -118,4 +118,49 @@
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>com.jvs.hibernate.app.App</mainClass>
+							<classpathPrefix>dependency-jars/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.5.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
