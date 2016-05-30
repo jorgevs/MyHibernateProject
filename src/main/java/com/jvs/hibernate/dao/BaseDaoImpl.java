@@ -31,7 +31,7 @@ public abstract class BaseDaoImpl<T extends BaseEntityImpl, I extends Serializab
 	protected Session session(){
 		try{
 			return this.sessionFactory.getCurrentSession();
-		} catch (Throwable ex) {
+		} catch (Exception ex) {
 			System.err.println("Initial SessionFactory creation failed." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
